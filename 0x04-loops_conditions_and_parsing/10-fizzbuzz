@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# This script executes the FizzBuzz logic for numbers from 1 to 100.
+for i in {1..100}; do
+    fb3=$(( i % 3 ))
+    fb5=$(( i % 5 ))
+
+    if [[ $fb3 == 0 && $fb5 == 0 ]]; then
+        echo "FizzBuzz"
+    elif [ "$fb3" == 0 ]; then
+        echo "Fizz"
+    elif [ "$fb5" == 0 ]; then
+        echo "Buzz"
+    else
+        echo "$i"
+    fi
+done

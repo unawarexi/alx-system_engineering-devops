@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# This script displays "Best School" 10 times except for the 4th and 8th iteration.
+FILES=$(ls)
+
+for file in ${FILES}
+do
+    filename=$(echo "$file" | cut -d '-' -f2-)
+    echo "$filename"
+done
