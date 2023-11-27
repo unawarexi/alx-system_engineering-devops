@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Bash script that configures an Nginx server so that
+# /redirect_me is redirecting to another page.
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+# Create a index file
+echo "Hello World!" > /var/www/html/andrew.html
+
+# Check if the backup file exists for the original `default` file.
+# This is meant to back up the file once the first time, after installing nginx.
+# if [ ! -f /etc/nginx/sites-available/default.bak ]; then
+#     sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+# fi
+# 
+# if [ ! -f /etc/nginx/sites-enabled/default.bak ]; then
+#     sudo cp /etc/nginx/sites-enabled/default /etc/nginx/sites-enabled/default.bak
+# fi
+
+# This modifies the `default` file, that is why I backed it up first
+printf %s "server {
+    listen 80;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index andrew.html index.html index.htm index.nginx-debian.html;
+
+    location /redirect_me {
+        return 301 https://www.github.com/unawarexi;
+    }
+}" > /etc/nginx/sites-enabled/default
+
+sudo service nginx restart
