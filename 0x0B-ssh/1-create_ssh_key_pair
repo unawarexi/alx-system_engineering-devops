@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# This script creates an RSA key pair
+
+keyfile="school"
+bit_size=4096
+passphrase="betty"
+
+ssh-keygen -t rsa -b $bit_size -f $keyfile -N $passphrase
+
+# echo "Generating public/private rsa key pair."
+# echo "Your identification has been saved in $keyfile."
+# echo "Your public key has been saved in $keyfile.pub"
+
+# echo "The key fingerprint is:"
+# ssh-keygen -lf $keyfile.pub
+# 
+# echo "The key's randomart image is:"
+# ssh-keygen -lvf $keyfile.pub | awk '/^ +[0-9a-f]+/ { print substr($0, index($0, $2)) }'
