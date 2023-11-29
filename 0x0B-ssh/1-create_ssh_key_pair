@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # This script creates an RSA key pair
 
+keyfile="school"
+bit_size=4096
+passphrase="betty"
 
-
-ssh-keygen -t rsa -b 4096 -P betty -f school
+ssh-keygen -t rsa -b $bit_size -f $keyfile -N $passphrase
 
 # echo "Generating public/private rsa key pair."
 # echo "Your identification has been saved in $keyfile."
