@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# This script configures Nginx so that its HTTP response contains a custom header
+
+sudo apt-get -y update
+sudo apt-get -y install nginx
+
+# Create a custom index page
+echo "Hello World!" > /var/www/html/uche.html
+
+# Create a custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html > /dev/null
+
+# Modify the `default` file to add your server block configuration
+sudo bash -c 'cat <<EOL > /etc/nginx/sites-enabled/default
+server {
+    listen 80;
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+    index Andrew.html index.html index.htm index.nginx-debian.html;
+
+    location /redirect_me {
+        return 301 https://www.github.com/unawarexi;
+    }
+
+    error_page 404 /404.html;
+    location = /404.html {
+        root /var/www/html/;
+        internal;
+    }
+}
+EOL'
+
+# Code for http_response_header. Only add it if its not present.
+if ! grep -q 'add_header X-Served-By \$hostname;' /etc/nginx/nginx.conf; then
+    sudo sed -i '/^http {/a \\tadd_header X-Served-By $hostname;' /etc/nginx/nginx.conf
+fi
+
+sudo service nginx restart
