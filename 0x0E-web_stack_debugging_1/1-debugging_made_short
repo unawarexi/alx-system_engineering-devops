@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# This bash script modifies the `default` config file of an Nginx server to be able to listen on port 80, and then it kills the nginx process
+sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default
+service nginx restart
+kill -9 "$(cat /run/nginx.pid)"
